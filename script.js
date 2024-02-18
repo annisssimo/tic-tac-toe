@@ -154,36 +154,43 @@ const gameController = (function() {
 })();
 
 
-const handleDOM = () => {
+const displayController = (() => {
   const boardJS = gameBoard.getBoard();
   const boardHTML = document.querySelector('.board-container');
-  
-  // Clear existing board HTML
-  boardHTML.innerHTML = '';
 
-  // Create HTML elements for each cell
-  for (let i = 0; i < boardJS.length; i++) {
-    for(let j = 0; j < boardJS[i].length; j++) {
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      cell.dataset.row = i;
-      cell.dataset.col = j;
-      cell.textContent = boardJS[i][j].getValue();
-      boardHTML.appendChild(cell);
+  const createHTMLElements = () => {
+    // Clear existing board HTML
+    boardHTML.innerHTML = '';
+
+    // Create HTML elements for each cell
+    for (let i = 0; i < boardJS.length; i++) {
+      for (let j = 0; j < boardJS[i].length; j++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.row = i;
+        cell.dataset.col = j;
+        cell.textContent = boardJS[i][j].getValue();
+        boardHTML.appendChild(cell);
+      }
     }
-  }
+  };
 
   // Add an event listener for cell clicks
   boardHTML.addEventListener('click', (event) => {
     if (event.target.classList.contains('cell')) {
       const row = event.target.dataset.row;
       const col = event.target.dataset.col;
+
+      // Call playRound before updating HTML to ensure the correct state
       gameController.playRound(row, col);
+
+      // Update HTML content based on the current game board state
+      createHTMLElements();
     }
   });
-  
-};
 
+  return { createHTMLElements };
+})();
 
-// Call handleDOM initially to set up the board
-handleDOM();
+// Call createHTMLElements initially to set up the board
+displayController.createHTMLElements();
