@@ -172,9 +172,17 @@ const handleDOM = () => {
       boardHTML.appendChild(cell);
     }
   }
-};
 
-// Add an event listener for cell clicks
+  // Add an event listener for cell clicks
+  boardHTML.addEventListener('click', (event) => {
+    if (event.target.classList.contains('cell')) {
+      const row = event.target.dataset.row;
+      const col = event.target.dataset.col;
+      gameController.playRound(row, col);
+    }
+  });
+  
+};
 
 
 // Call handleDOM initially to set up the board
