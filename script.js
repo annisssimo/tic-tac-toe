@@ -29,6 +29,7 @@ const gameBoard = (function() {
         board[i][j].addSign('');
       }
     }
+    console.log('----STARTING NEW GAME----')
   };
 
   return {getBoard, updateCell, printBoard, resetBoard};
@@ -94,7 +95,6 @@ const gameController = (function() {
           gameBoard.printBoard();
           console.log(`${activePlayer.name} wins!`);
           gameBoard.resetBoard();
-          console.log('----STARTING NEW GAME----')
         } else {
           const isDraw = gameBoard.getBoard().every(row =>
             row.every(cell => cell.getValue() !== '')
@@ -102,6 +102,7 @@ const gameController = (function() {
       
           if (isDraw) {
             console.log("It's a draw!");
+            gameBoard.resetBoard();
           } else {
             switchPlayer();
             printNewRound();
@@ -153,6 +154,7 @@ const gameController = (function() {
 
 })();
 
+
 // gameController.playRound(0, 0)
 // gameController.playRound(0, 1)
 // gameController.playRound(0, 2)
@@ -161,4 +163,16 @@ const gameController = (function() {
 // gameController.playRound(1, 2)
 // gameController.playRound(2, 0)
 // gameController.playRound(2, 1)
+// gameController.playRound(2, 2)
+
+
+//draw
+// gameController.playRound(0, 0)
+// gameController.playRound(1, 0)
+// gameController.playRound(2, 0)
+// gameController.playRound(1, 1)
+// gameController.playRound(0, 1)
+// gameController.playRound(2, 1)
+// gameController.playRound(1, 2)
+// gameController.playRound(0, 2)
 // gameController.playRound(2, 2)
