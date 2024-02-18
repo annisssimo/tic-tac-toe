@@ -13,7 +13,7 @@ const gameBoard = (function() {
   const getBoard = () => board;
 
   const updateCell = (row, col, sign) => {
-    if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col].getValue() === 0) {
+    if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col].getValue() === '') {
       board[row][col].addSign(sign);
     }
   };
@@ -23,11 +23,19 @@ const gameBoard = (function() {
     console.log(formattedBoard);
   };
 
-  return {getBoard, updateCell, printBoard};
+  const resetBoard = () => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        board[i][j].addSign('');
+      }
+    }
+  };
+
+  return {getBoard, updateCell, printBoard, resetBoard};
 })();
 
 function Cell() {
-  let value = 0;
+  let value = '';
 
   // Accept a player's token to change the value of the cell
   const addSign = (sign) => {
@@ -70,19 +78,41 @@ const gameController = (function() {
   }
 
   const playRound = (row, col) => {
-
-    if (row >= 0 && row < 3 && col >= 0 && col < 3 && gameBoard.getBoard()[row][col].getValue() === 0) {
+    if (row >= 0 && row < 3 && col >= 0 && col < 3 && gameBoard.getBoard()[row][col].getValue() === '') {
       gameBoard.updateCell(row, col, activePlayer.sign);
 
-    console.log(
-      `Put ${activePlayer.name}'s sign ${activePlayer.sign} into cell [${row}][${col}]`
-    );
+      console.log(
+        `Put ${activePlayer.name}'s sign ${activePlayer.sign} into cell [${row}][${col}]`
+      );
 
-    /*  This is where we would check for a winner and handle that logic,
-        such as a win message. */
+      const announceWinner = () => {
+        const winner = checkWin();
 
-    switchPlayer();
-    printNewRound();
+        const getWinner = () => winner;
+      
+        if (winner) {
+          gameBoard.printBoard();
+          console.log(`${activePlayer.name} wins!`);
+          gameBoard.resetBoard();
+          console.log('----STARTING NEW GAME----')
+        } else {
+          const isDraw = gameBoard.getBoard().every(row =>
+            row.every(cell => cell.getValue() !== '')
+          );
+      
+          if (isDraw) {
+            console.log("It's a draw!");
+          } else {
+            switchPlayer();
+            printNewRound();
+          }
+        }
+
+        return {getWinner}
+      };
+
+      announceWinner();
+      return;
     }
     else {
       console.log('Invalid input. Try again...');
@@ -90,6 +120,45 @@ const gameController = (function() {
     }
   };
 
+  /* heck for a winner and handle that logic */
+  function checkWin() {
+    const board = gameBoard.getBoard();
+
+    const winConditions = [
+      // Horizontal Wins
+      [[0, 0], [0, 1], [0, 2]],
+      [[1, 0], [1, 1], [1, 2]],
+      [[2, 0], [2, 1], [2, 2]],
+      // Vertical Wins
+      [[0, 0], [1, 0], [2, 0]],
+      [[0, 1], [1, 1], [2, 1]],
+      [[0, 2], [1, 2], [2, 2]],
+      // Diagonal Wins
+      [[0, 0], [1, 1], [2, 2]],
+      [[0, 2], [1, 1], [2, 0]]
+    ];
+    
+  
+    return winConditions.some(condition => {
+      const [a, b, c] = condition;
+      const valueA = board[a[0]][a[1]].getValue();
+      const valueB = board[b[0]][b[1]].getValue();
+      const valueC = board[c[0]][c[1]].getValue();
+  
+      return valueA !== '' && valueA === valueB && valueA === valueC;
+    });
+  }
+
   return {playRound};
 
 })();
+
+// gameController.playRound(0, 0)
+// gameController.playRound(0, 1)
+// gameController.playRound(0, 2)
+// gameController.playRound(1, 0)
+// gameController.playRound(1, 1)
+// gameController.playRound(1, 2)
+// gameController.playRound(2, 0)
+// gameController.playRound(2, 1)
+// gameController.playRound(2, 2)
