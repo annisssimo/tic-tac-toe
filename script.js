@@ -29,7 +29,7 @@ const gameBoard = (function() {
         board[i][j].addSign('');
       }
     }
-    console.log('----STARTING NEW GAME----')
+    console.log('----STARTING NEW GAME----');
   };
 
   return {getBoard, updateCell, printBoard, resetBoard};
@@ -151,28 +151,31 @@ const gameController = (function() {
   }
 
   return {playRound};
-
 })();
 
 
-// gameController.playRound(0, 0)
-// gameController.playRound(0, 1)
-// gameController.playRound(0, 2)
-// gameController.playRound(1, 0)
-// gameController.playRound(1, 1)
-// gameController.playRound(1, 2)
-// gameController.playRound(2, 0)
-// gameController.playRound(2, 1)
-// gameController.playRound(2, 2)
+const handleDOM = () => {
+  const boardJS = gameBoard.getBoard();
+  const boardHTML = document.querySelector('.board-container');
+  
+  // Clear existing board HTML
+  boardHTML.innerHTML = '';
+
+  // Create HTML elements for each cell
+  for (let i = 0; i < boardJS.length; i++) {
+    for(let j = 0; j < boardJS[i].length; j++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.row = i;
+      cell.dataset.col = j;
+      cell.textContent = boardJS[i][j].getValue();
+      boardHTML.appendChild(cell);
+    }
+  }
+};
+
+// Add an event listener for cell clicks
 
 
-//draw
-// gameController.playRound(0, 0)
-// gameController.playRound(1, 0)
-// gameController.playRound(2, 0)
-// gameController.playRound(1, 1)
-// gameController.playRound(0, 1)
-// gameController.playRound(2, 1)
-// gameController.playRound(1, 2)
-// gameController.playRound(0, 2)
-// gameController.playRound(2, 2)
+// Call handleDOM initially to set up the board
+handleDOM();

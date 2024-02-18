@@ -1,0 +1,44 @@
+/* CSS RESET */
+*, html, body {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --space: 24px;
+}
+
+body {
+    background-color: rgb(219, 255, 243);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space);
+}
+
+h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 48px;
+    text-align: center;
+    margin-top: var(--space);
+    color: rgb(0, 43, 43);
+}
+
+.board-container {
+    width: 480px;
+    height: 480px;
+    border: 8px solid rgb(0, 135, 135);
+    border-radius: 10px;
+    background-color:rgb(235, 255, 255);
+    display: grid;
+    grid-template: repeat(3, 160px) / repeat(3, 160px);
+}
+
+.cell {
+    border: 1px solid rgb(0, 43, 43);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+}
