@@ -70,17 +70,24 @@ const gameController = (function() {
   }
 
   const playRound = (row, col) => {
+
+    if (row >= 0 && row < 3 && col >= 0 && col < 3 && gameBoard.getBoard()[row][col].getValue() === 0) {
+      gameBoard.updateCell(row, col, activePlayer.sign);
+
     console.log(
       `Put ${activePlayer.name}'s sign ${activePlayer.sign} into cell [${row}][${col}]`
     );
-
-    gameBoard.updateCell(row, col, activePlayer.sign);
 
     /*  This is where we would check for a winner and handle that logic,
         such as a win message. */
 
     switchPlayer();
     printNewRound();
+    }
+    else {
+      console.log('Invalid input. Try again...');
+      return;
+    }
   };
 
   return {playRound};
