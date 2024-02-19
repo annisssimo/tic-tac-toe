@@ -24,6 +24,7 @@ const gameBoard = (function() {
         board[i][j].addSign('');
       }
     }
+    gameController.resetActivePlayer();
     writeMessage('The first player walks with the X sign');
   };
 
@@ -76,6 +77,10 @@ const gameController = (function() {
 
   const switchPlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  }
+
+  const resetActivePlayer = () => {
+    activePlayer = players[0];
   }
 
   const playRound = (row, col) => {
@@ -156,7 +161,7 @@ const gameController = (function() {
     });
   }
 
-  return {playRound, getIsOver, resetIsOver};
+  return {playRound, getIsOver, resetIsOver, resetActivePlayer};
 })();
 
 
