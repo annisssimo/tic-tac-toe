@@ -92,3 +92,40 @@ dialog {
     outline: none;
 }
 
+
+/* Media Query for smaller screens */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 14px; /* Adjust the font size for smaller screens */
+    }
+
+    .main-container {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        gap: 10px; /* Reduce the gap between elements */
+        text-align: center; /* Center-align text on smaller screens */
+    }
+
+    h1 {
+        font-size: 40px; /* Adjust the heading font size */
+    }
+
+    .board-container {
+        width: 80%; /* Adjust the width of the board container */
+        height: 80vw; /* Set height based on the viewport width */
+        grid-template: repeat(3, 1fr) / repeat(3, 1fr); /* Adjust grid layout for smaller screens */
+    }
+
+    .cell {
+        font-size: 60px; /* Adjust cell font size for smaller screens */
+    }
+
+    button {
+        font-size: 20px; /* Adjust button font size for smaller screens */
+    }
+
+    dialog {
+        width: 90%; /* Adjust the width of the dialog for smaller screens */
+        padding: 20px; /* Adjust padding for smaller screens */
+        font-size: 18px; /* Adjust font size for smaller screens */
+    }
+}
