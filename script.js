@@ -59,6 +59,8 @@ const gameController = (function() {
 
   const getIsOver = () => isOver;
 
+  const resetIsOver = () => {isOver = false;}
+
   const players = [
     {
       name: firstPlayerName,
@@ -140,7 +142,7 @@ const gameController = (function() {
     });
   }
 
-  return {playRound, getIsOver};
+  return {playRound, getIsOver, resetIsOver};
 })();
 
 
@@ -181,9 +183,9 @@ const displayController = (() => {
   });
 
   resetBtn.addEventListener('click', () => {
+    gameController.resetIsOver();
     // Call the resetBoard function from the gameBoard module
     gameBoard.resetBoard();
-  
     // Update HTML content after resetting the board
     createHTMLElements();
   });
