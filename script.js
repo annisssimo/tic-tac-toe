@@ -193,6 +193,9 @@ const displayController = (() => {
 
       // Update HTML content based on the current game board state
       createHTMLElements();
+
+      // Play a click sound
+      playSound('clickSound');
     }
   });
 
@@ -203,6 +206,14 @@ const displayController = (() => {
     // Update HTML content after resetting the board
     createHTMLElements();
   });
+
+  // Function to play a sound by its ID
+  const playSound = (soundId) => {
+    const sound = document.getElementById(soundId);
+    if (sound) {
+      sound.play();
+    }
+  };
 
   return { createHTMLElements };
 })();
