@@ -6,48 +6,56 @@
 
 :root {
     --space: 36px;
+    --dark: rgb(0, 43, 43);
+    --green: rgb(0, 135, 135);
+    --background: rgb(235, 255, 255);
 }
 
 body {
     background-color: rgb(219, 255, 243);
+    font-family: 'Courier New', Courier, monospace;
+    text-align: start;
+}
+
+.main-container {
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: var(--space);
 }
 
 h1 {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 48px;
-    text-align: center;
+    font-size: 80px;
     margin-top: var(--space);
-    color: rgb(0, 43, 43);
+    color: var(--dark);
 }
 
 .board-container {
     width: 480px;
     height: 480px;
-    border: 8px solid rgb(0, 135, 135);
+    border: 8px solid var(--green);
     border-radius: 10px;
-    background-color:rgb(235, 255, 255);
+    background-color: var(--background);
     display: grid;
     grid-template: repeat(3, 160px) / repeat(3, 160px);
 }
 
 .cell {
-    border: 1px solid rgb(0, 43, 43);
+    border: 1px solid var(--dark);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 48px;
+    font-size: 122px;
 }
 
 button {
     padding: 10px 20px;
+    margin-top: 26px;
     border: none;
-    border-radius: 20px;
-    background-color: aqua;
+    border-radius: 40px;
+    background-color: var(--green);
+    color: white;
     font-weight: 700;
     font-size: 30px;
 }

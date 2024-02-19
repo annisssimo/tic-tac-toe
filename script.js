@@ -18,20 +18,16 @@ const gameBoard = (function() {
     }
   };
 
-  const printBoard = () => {
-    const formattedBoard = board.map(row => row.map(cell => cell.getValue()));
-    console.log(formattedBoard);
-  };
-
   const resetBoard = () => {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         board[i][j].addSign('');
       }
     }
+    writeMessage('The first player walks with the X sign');
   };
 
-  return {getBoard, updateCell, printBoard, resetBoard};
+  return {getBoard, updateCell, resetBoard};
 })();
 
 function Cell() {
@@ -51,9 +47,14 @@ function Cell() {
   };
 }
 
+const writeMessage = function(msg) {
+  const message = document.querySelector('p');
+  message.textContent = msg;
+};
+
 const gameController = (function() {
-  firstPlayerName = 'Player 1';
-  secondPlayerName = 'Player 2';
+  const firstPlayerName = 'Player 1';
+  const secondPlayerName = 'Player 2';
 
   const players = [
     {
@@ -72,18 +73,9 @@ const gameController = (function() {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   }
 
-  const printNewRound = () => {
-    gameBoard.printBoard();
-    console.log(`${activePlayer.name}'s turn.`);
-  }
-
   const playRound = (row, col) => {
     if (row >= 0 && row < 3 && col >= 0 && col < 3 && gameBoard.getBoard()[row][col].getValue() === '') {
       gameBoard.updateCell(row, col, activePlayer.sign);
-
-      console.log(
-        `Put ${activePlayer.name}'s sign ${activePlayer.sign} into cell [${row}][${col}]`
-      );
 
       const announceWinner = () => {
         const winner = checkWin();
@@ -91,18 +83,17 @@ const gameController = (function() {
         const getWinner = () => winner;
       
         if (winner) {
-          gameBoard.printBoard();
-          console.log(`${activePlayer.name} wins!`);
+          writeMessage(`${activePlayer.name} wins!`);
         } else {
           const isDraw = gameBoard.getBoard().every(row =>
             row.every(cell => cell.getValue() !== '')
           );
       
           if (isDraw) {
-            console.log("It's a draw!");
+            writeMessage("It's a draw!");
           } else {
             switchPlayer();
-            printNewRound();
+            writeMessage(`${activePlayer.name}'s turn.`);
           }
         }
 
