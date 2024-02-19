@@ -13,6 +13,7 @@
 
 body {
     background-color: rgb(219, 255, 243);
+    color: var(--dark);
     font-family: 'Courier New', Courier, monospace;
     text-align: start;
 }
@@ -28,7 +29,6 @@ body {
 h1 {
     font-size: 80px;
     margin-top: var(--space);
-    color: var(--dark);
 }
 
 .board-container {
@@ -58,4 +58,8 @@ button {
     color: white;
     font-weight: 700;
     font-size: 30px;
+}
+
+.win {
+    background-color: aquamarine;
 }

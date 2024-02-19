@@ -53,8 +53,11 @@ const writeMessage = function(msg) {
 };
 
 const gameController = (function() {
-  const firstPlayerName = 'Player 1';
-  const secondPlayerName = 'Player 2';
+  const firstPlayerName = 'Player X';
+  const secondPlayerName = 'Player O';
+  let isOver = false;
+
+  const getIsOver = () => isOver;
 
   const players = [
     {
@@ -74,6 +77,7 @@ const gameController = (function() {
   }
 
   const playRound = (row, col) => {
+
     if (row >= 0 && row < 3 && col >= 0 && col < 3 && gameBoard.getBoard()[row][col].getValue() === '') {
       gameBoard.updateCell(row, col, activePlayer.sign);
 
@@ -83,6 +87,7 @@ const gameController = (function() {
         const getWinner = () => winner;
       
         if (winner) {
+          isOver = true;
           writeMessage(`${activePlayer.name} wins!`);
         } else {
           const isDraw = gameBoard.getBoard().every(row =>
@@ -90,14 +95,15 @@ const gameController = (function() {
           );
       
           if (isDraw) {
+            isOver = true;
             writeMessage("It's a draw!");
           } else {
             switchPlayer();
-            writeMessage(`${activePlayer.name}'s turn.`);
+            writeMessage(`${activePlayer.name} turn.`);
           }
         }
 
-        return {getWinner}
+        return {getWinner};
       };
 
       announceWinner();
@@ -134,7 +140,7 @@ const gameController = (function() {
     });
   }
 
-  return {playRound};
+  return {playRound, getIsOver};
 })();
 
 
@@ -162,7 +168,7 @@ const displayController = (() => {
 
   // Add an event listener for cell clicks
   boardHTML.addEventListener('click', (event) => {
-    if (event.target.classList.contains('cell')) {
+    if (event.target.classList.contains('cell') &&!gameController.getIsOver()) {
       const row = event.target.dataset.row;
       const col = event.target.dataset.col;
 
