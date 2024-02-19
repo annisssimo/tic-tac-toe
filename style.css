@@ -8,11 +8,12 @@
     --space: 36px;
     --dark: rgb(0, 43, 43);
     --green: rgb(0, 135, 135);
-    --background: rgb(235, 255, 255);
+    --cell-background: rgb(235, 255, 255);
+    --background: rgb(219, 255, 243);
 }
 
 body {
-    background-color: rgb(219, 255, 243);
+    background-color: var(--background);
     color: var(--dark);
     font-family: 'Courier New', Courier, monospace;
     text-align: start;
@@ -31,12 +32,16 @@ h1 {
     margin-top: var(--space);
 }
 
+h3 {
+    text-align: center;
+}
+
 .board-container {
     width: 480px;
     height: 480px;
     border: 8px solid var(--green);
     border-radius: 10px;
-    background-color: var(--background);
+    background-color: var(--cell-background);
     display: grid;
     grid-template: repeat(3, 160px) / repeat(3, 160px);
 }
@@ -47,6 +52,10 @@ h1 {
     justify-content: center;
     align-items: center;
     font-size: 122px;
+}
+
+.cell:hover {
+    background-color: rgba(0, 135, 135, 0.139);
 }
 
 button {
@@ -60,6 +69,26 @@ button {
     font-size: 30px;
 }
 
+button:hover {
+    background-color: rgb(10, 115, 115);
+}
+
 .win {
     background-color: aquamarine;
 }
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    background-color: var(--background);
+    border-radius: 10px;
+    border: none;
+    box-shadow: 4px 4px 8px rgba(6, 1, 1, 0.4);
+    padding: 30px;
+    font-size: 22px;
+    outline: none;
+}
+

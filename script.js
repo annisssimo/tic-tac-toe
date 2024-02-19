@@ -87,23 +87,37 @@ const gameController = (function() {
         const winner = checkWin();
 
         const getWinner = () => winner;
+
+        const winDialog = document.querySelector('dialog');
+
+        const dialogContent = winDialog.querySelector('h3');
       
         if (winner) {
           isOver = true;
+          dialogContent.textContent = `${activePlayer.name} wins!`;
+          winDialog.showModal();        
           writeMessage(`${activePlayer.name} wins!`);
         } else {
-          const isDraw = gameBoard.getBoard().every(row =>
-            row.every(cell => cell.getValue() !== '')
+          const isDraw = gameBoard.getBoard().every(row =>row.every(cell => cell.getValue() !== '')
           );
       
           if (isDraw) {
             isOver = true;
+            dialogContent.textContent = "It's a draw!";
+            winDialog.showModal();
             writeMessage("It's a draw!");
           } else {
             switchPlayer();
             writeMessage(`${activePlayer.name} turn.`);
           }
         }
+
+        document.addEventListener('click', function(event) {
+          if (event.target === winDialog) {
+            winDialog.close();
+          }
+      });
+      
 
         return {getWinner};
       };
@@ -189,7 +203,6 @@ const displayController = (() => {
     // Update HTML content after resetting the board
     createHTMLElements();
   });
-  
 
   return { createHTMLElements };
 })();
