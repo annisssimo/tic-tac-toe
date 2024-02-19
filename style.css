@@ -42,3 +42,12 @@ h1 {
     align-items: center;
     font-size: 48px;
 }
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: aqua;
+    font-weight: 700;
+    font-size: 30px;
+}

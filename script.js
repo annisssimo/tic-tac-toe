@@ -29,7 +29,6 @@ const gameBoard = (function() {
         board[i][j].addSign('');
       }
     }
-    console.log('----STARTING NEW GAME----');
   };
 
   return {getBoard, updateCell, printBoard, resetBoard};
@@ -94,7 +93,6 @@ const gameController = (function() {
         if (winner) {
           gameBoard.printBoard();
           console.log(`${activePlayer.name} wins!`);
-          gameBoard.resetBoard();
         } else {
           const isDraw = gameBoard.getBoard().every(row =>
             row.every(cell => cell.getValue() !== '')
@@ -102,7 +100,6 @@ const gameController = (function() {
       
           if (isDraw) {
             console.log("It's a draw!");
-            gameBoard.resetBoard();
           } else {
             switchPlayer();
             printNewRound();
@@ -113,10 +110,6 @@ const gameController = (function() {
       };
 
       announceWinner();
-      return;
-    }
-    else {
-      console.log('Invalid input. Try again...');
       return;
     }
   };
@@ -157,6 +150,7 @@ const gameController = (function() {
 const displayController = (() => {
   const boardJS = gameBoard.getBoard();
   const boardHTML = document.querySelector('.board-container');
+  const resetBtn = document.querySelector('button');
 
   const createHTMLElements = () => {
     // Clear existing board HTML
@@ -188,6 +182,15 @@ const displayController = (() => {
       createHTMLElements();
     }
   });
+
+  resetBtn.addEventListener('click', () => {
+    // Call the resetBoard function from the gameBoard module
+    gameBoard.resetBoard();
+  
+    // Update HTML content after resetting the board
+    createHTMLElements();
+  });
+  
 
   return { createHTMLElements };
 })();
